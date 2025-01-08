@@ -1,0 +1,1588 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "SDP Platform APIs",
+    "description" : "This document details out the REST APIs of SDP Platform. Tenant/Partner needs to implement these APIs for making transactions with the SDP Platform. These APIs will accepts only HTTP Post method and the request body should always be in the JSON format. The platform responds with the JSON body as response. Most of the methods are synchronous methods and few of the methods are asynchronous methods.",
+    "termsOfService" : "http://www.digitral.com",
+    "contact" : {
+      "name" : "Digitral SDP API Support",
+      "url" : "http://www.digitral.com",
+      "email" : "support@digitral.com"
+    },
+    "license" : {
+      "name" : "GPLv3",
+      "url" : "https://www.gnu.org/licenses/gpl-3.0.en.html"
+    },
+    "version" : "v1"
+  },
+  "servers" : [ {
+    "url" : "http://192.168.161.160:30100",
+    "description" : "Development Server"
+  }, {
+    "url" : "https://csdpdev-api.d21.co.in",
+    "description" : "Staging Server"
+  }, {
+    "url" : "https://production-server.com",
+    "description" : "Production Server"
+  } ],
+  "security" : [ {
+    "basicAuth" : [ ]
+  } ],
+  "paths" : {
+    "/sdp-apis/subscription/v1/activate" : {
+      "post" : {
+        "tags" : [ "default" ],
+        "summary" : "This is used by Internal Connecting System for Activating / Provisioning a Subscriber for a Subscription Service.",
+        "operationId" : "activateSubscriber",
+        "parameters" : [ {
+          "name" : "Content-Type",
+          "in" : "header",
+          "description" : "Content Type",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "application/json"
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "User Autherization",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "c2luZGh1ci52YTppbWkxMjNWQQ=="
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/v1_activate_body"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful Response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200"
+                },
+                "example" : {
+                  "statusInfo" : {
+                    "statusCode" : "200",
+                    "referenceCode" : "{{$randomInt}}",
+                    "serverReferenceCode" : "{{$randomInt}}",
+                    "totalAmountCharged" : 1
+                  },
+                  "subscriptionInfo" : {
+                    "productIdentifier" : "{{randomInt}}",
+                    "subscriptionId" : "{{randomInt}}",
+                    "subscriptionStatus" : "1",
+                    "subscriptionSubStatus" : "0",
+                    "validity" : "7",
+                    "nextRenewalDate" : "2021-02-12 09:23:55"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/sdp-apis/subscription/v1/unsubscribe" : {
+      "post" : {
+        "tags" : [ "default" ],
+        "summary" : "This is used to De-Activate a user from a service.",
+        "operationId" : "unsubscribe",
+        "parameters" : [ {
+          "name" : "Content-Type",
+          "in" : "header",
+          "description" : "Content Type",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "application/json"
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "User Autherization",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "c2luZGh1ci52YTppbWkxMjNWQQ=="
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/v1_unsubscribe_body"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200"
+                },
+                "example" : {
+                  "statusInfo" : {
+                    "statusCode" : "200",
+                    "referenceCode" : "{{$randomInt}}",
+                    "serverReferenceCode" : "{{$randomInt}}",
+                    "totalAmountCharged" : 1
+                  },
+                  "subscriptionInfo" : {
+                    "subscriptionId" : "5011270016177973837930028",
+                    "subscriptionStatus" : "9"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/sdp-apis/subscription/v1/getsubscriptionstatus" : {
+      "post" : {
+        "tags" : [ "default" ],
+        "summary" : "This is used by partner to get Subscription status of the user for a service.",
+        "operationId" : "getSubscriptionStatus",
+        "parameters" : [ {
+          "name" : "Content-Type",
+          "in" : "header",
+          "description" : "Content Type",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "application/json"
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "User Autherization",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "c2luZGh1ci52YTppbWkxMjNWQQ=="
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/v1_getsubscriptionstatus_body"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200"
+                },
+                "example" : {
+                  "statusInfo" : {
+                    "statusCode" : "200",
+                    "referenceCode" : "{{$randomInt}}",
+                    "serverReferenceCode" : "{{$randomInt}}",
+                    "totalAmountCharged" : 1
+                  },
+                  "subscriptionInfo" : {
+                    "subscriptionId" : "5011270016177973837930028",
+                    "subscriptionStatus" : "9",
+                    "subscriptionSubStatus" : "51",
+                    "registrationDate" : "YYYY-MM-DD hh:mm:ss",
+                    "activationDate" : "YYYY-MM-DD hh:mm:ss",
+                    "lastRenewalDate" : "YYYY-MM-DD hh:mm:ss",
+                    "nextRenewalDate" : "YYYY-MM-DD hh:mm:ss",
+                    "statusChangedDate" : "YYYY-MM-DD hh:mm:ss",
+                    "lastChargedAmount" : "10.00",
+                    "validity" : "10",
+                    "code" : "12345"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/sdp-apis/subscription/v1/pause" : {
+      "post" : {
+        "tags" : [ "default" ],
+        "summary" : "This is used by partner for pause a Subscriber for a Subscription Service.",
+        "operationId" : "onHold",
+        "parameters" : [ {
+          "name" : "Content-Type",
+          "in" : "header",
+          "description" : "Content Type",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "application/json"
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "User Autherization",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "c2luZGh1ci52YTppbWkxMjNWQQ=="
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/v1_pause_body"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_1"
+                },
+                "example" : {
+                  "statusInfo" : {
+                    "statusCode" : "200",
+                    "referenceCode" : "{{$randomInt}}",
+                    "serverReferenceCode" : "{{$randomInt}}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/sdp-apis/charging/v1/chargeuser" : {
+      "post" : {
+        "tags" : [ "default" ],
+        "summary" : "This is used to charge a subscriber.",
+        "operationId" : "chargeUser",
+        "parameters" : [ {
+          "name" : "Content-Type",
+          "in" : "header",
+          "description" : "Content Type",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "application/json"
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "User Autherization",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "c2luZGh1ci52YTppbWkxMjNWQQ=="
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/v1_chargeuser_body"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_1"
+                },
+                "example" : {
+                  "statusInfo" : {
+                    "statusCode" : "200",
+                    "referenceCode" : "{{$randomInt}}",
+                    "serverReferenceCode" : "{{$randomInt}}",
+                    "totalAmountCharged" : 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/sdp-apis/charging/v1/chargeotp" : {
+      "post" : {
+        "tags" : [ "default" ],
+        "summary" : "This is used by the partner to charge the subscriber based on the OTP PIN given by Consent Gateway to the subscriber.",
+        "operationId" : "chargeOtp",
+        "parameters" : [ {
+          "name" : "Content-Type",
+          "in" : "header",
+          "description" : "Content Type",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "application/json"
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "User Autherization",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "c2luZGh1ci52YTppbWkxMjNWQQ=="
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/v1_chargeotp_body"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_1"
+                },
+                "example" : {
+                  "statusInfo" : {
+                    "statusCode" : "200",
+                    "referenceCode" : "{{$randomInt}}",
+                    "serverReferenceCode" : "{{$randomInt}}",
+                    "totalAmountCharged" : 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/sdp-apis/charging/v1/refund" : {
+      "post" : {
+        "tags" : [ "default" ],
+        "summary" : "This is used to raise a refund request against a charged transaction made by a subscriber.",
+        "operationId" : "refundTransaction",
+        "parameters" : [ {
+          "name" : "Content-Type",
+          "in" : "header",
+          "description" : "Content Type",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "application/json"
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "User Autherization",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "c2luZGh1ci52YTppbWkxMjNWQQ=="
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/v1_refund_body"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_1"
+                },
+                "example" : {
+                  "statusInfo" : {
+                    "statusCode" : "200",
+                    "referenceCode" : "{{$randomInt}}",
+                    "serverReferenceCode" : "{{$randomInt}}",
+                    "totalAmountCharged" : 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/sdp-apis/messaging/v1/sendsms" : {
+      "post" : {
+        "tags" : [ "default" ],
+        "summary" : "Send SMS  With Charge",
+        "description" : "The API will Send SMS  With Charge",
+        "operationId" : "sendSms",
+        "parameters" : [ {
+          "name" : "Content-Type",
+          "in" : "header",
+          "description" : "Content Type",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "application/json"
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "User Autherization",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "c2luZGh1ci52YTppbWkxMjNWQQ=="
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/v1_sendsms_body"
+              },
+              "example" : {
+                "accessInfo" : {
+                  "serviceKey" : "3e2856672fc112d71a",
+                  "packCode" : "PC4545",
+                  "endUserId" : "8801873206281",
+                  "accessChannel" : "MTSMS",
+                  "referenceCode" : "{{$randomInt}}"
+                },
+                "smsInfo" : {
+                  "msgTransactionId" : "{{$randomInt}}",
+                  "language" : "EN",
+                  "senderId" : "1234",
+                  "message" : "sample message",
+                  "msgType" : "TEXT",
+                  "validity" : "2",
+                  "deliveryReport" : "0"
+                },
+                "charge" : {
+                  "code" : "40010204001",
+                  "amount" : "1.0",
+                  "taxAmount" : "1",
+                  "description" : "Charge Message",
+                  "currency" : "THB"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_1"
+                },
+                "example" : {
+                  "statusInfo" : {
+                    "statusCode" : "200",
+                    "referenceCode" : "{{$randomInt}}",
+                    "serverReferenceCode" : "{{$randomInt}}",
+                    "totalAmountCharged" : 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/sdp-apis/messaging/v1/sendotp" : {
+      "post" : {
+        "tags" : [ "default" ],
+        "summary" : "This is used by the partner to request the OTP Push to the subscriber over SMS to the Consent Gateway.",
+        "operationId" : "sendOtp",
+        "parameters" : [ {
+          "name" : "Content-Type",
+          "in" : "header",
+          "description" : "Content Type",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "application/json"
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "User Autherization",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "c2luZGh1ci52YTppbWkxMjNWQQ=="
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/v1_sendotp_body"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_1"
+                },
+                "example" : {
+                  "statusInfo" : {
+                    "statusCode" : "200",
+                    "referenceCode" : "{{$randomInt}}",
+                    "serverReferenceCode" : "{{$randomInt}}",
+                    "otpTransactionId" : "{{randomInt}}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/sdp-apis/messaging/v1/validateotp" : {
+      "post" : {
+        "tags" : [ "default" ],
+        "summary" : "This is used for validating the OTP PIN generated for authentication of MSISDN.",
+        "operationId" : "authenticateOtp",
+        "parameters" : [ {
+          "name" : "Content-Type",
+          "in" : "header",
+          "description" : "Content Type",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "application/json"
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "User Autherization",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "c2luZGh1ci52YTppbWkxMjNWQQ=="
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/v1_validateotp_body"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_1"
+                },
+                "example" : {
+                  "statusInfo" : {
+                    "statusCode" : "200",
+                    "referenceCode" : "{{$randomInt}}",
+                    "serverReferenceCode" : "{{$randomInt}}",
+                    "totalAmountCharged" : 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    },
+    "/sdp-apis/messaging/v1/resendotp" : {
+      "post" : {
+        "tags" : [ "default" ],
+        "summary" : "This is used for resend SMS OTP PIN for the MSISDN.",
+        "operationId" : "resendOtp",
+        "parameters" : [ {
+          "name" : "Content-Type",
+          "in" : "header",
+          "description" : "Content Type",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "application/json"
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "User Autherization",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "c2luZGh1ci52YTppbWkxMjNWQQ=="
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/v1_resendotp_body"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_1"
+                },
+                "example" : {
+                  "statusInfo" : {
+                    "statusCode" : "200",
+                    "referenceCode" : "{{$randomInt}}",
+                    "serverReferenceCode" : "{{$randomInt}}",
+                    "totalAmountCharged" : 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "accessInfo" : {
+        "maxProperties" : 8,
+        "minProperties" : 3,
+        "type" : "object",
+        "properties" : {
+          "serviceKey" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "The service key assigned to the service to access the API Method"
+          },
+          "packCode" : {
+            "maxLength" : 10,
+            "type" : "string",
+            "description" : "The pack code assigned to the service or plan to access the API Method"
+          },
+          "endUserId" : {
+            "maxLength" : 40,
+            "type" : "string",
+            "description" : "This need to be msisdn given by the Platform based on the service configuration"
+          },
+          "endUserIds" : {
+            "maxLength" : 10,
+            "type" : "array",
+            "description" : "This need to be msisdn lsit given by the Platform based on the service configuration",
+            "items" : {
+              "maxLength" : 18,
+              "type" : "string",
+              "description" : "This need to be msisdn given by the Platform based on the service configuration"
+            }
+          },
+          "accessChannel" : {
+            "maxLength" : 10,
+            "type" : "string",
+            "description" : "Accepted List of Values that can be used for this parameter"
+          },
+          "referenceCode" : {
+            "maxLength" : 25,
+            "minLength" : 25,
+            "pattern" : "^[0-9]*$",
+            "type" : "string",
+            "description" : "Unique Transaction code assigned by the partner for the Transaction"
+          },
+          "otp" : {
+            "maxLength" : 6,
+            "type" : "string",
+            "description" : "OTP PIN (6Digits) entered by the partner in the partner portal"
+          },
+          "otpTransactionId" : {
+            "maxLength" : 25,
+            "type" : "string",
+            "description" : "Unique OTP Transaction Id given by the Platform"
+          },
+          "considerCharging" : {
+            "maxLength" : 1,
+            "type" : "string",
+            "description" : "Charging Consent while validating OTP. Possible Values - 0/1"
+          }
+        },
+        "description" : "This object defines the user access properties for the API call"
+      },
+      "errorInfo" : {
+        "maxProperties" : 2,
+        "minProperties" : 2,
+        "type" : "object",
+        "properties" : {
+          "errorCode" : {
+            "maxLength" : 5,
+            "type" : "string",
+            "description" : "Error Code given by the Platform"
+          },
+          "errorDescription" : {
+            "maxLength" : 300,
+            "type" : "string",
+            "description" : "Description of the error code"
+          }
+        },
+        "description" : "This object defines the Error properties for the API call"
+      },
+      "statusInfo" : {
+        "maxProperties" : 8,
+        "minProperties" : 3,
+        "type" : "object",
+        "properties" : {
+          "statusCode" : {
+            "maxLength" : 3,
+            "type" : "string",
+            "description" : "200-Success, 500-Error",
+            "enum" : [ "200", "500" ]
+          },
+          "referenceCode" : {
+            "maxLength" : 25,
+            "type" : "string",
+            "description" : "Unique Transaction code assigned by the partner for the Transaction"
+          },
+          "serverReferenceCode" : {
+            "maxLength" : 25,
+            "type" : "string",
+            "description" : "Unique Transaction code assigned by the platform for the Transaction"
+          },
+          "totalAmountCharged" : {
+            "maxLength" : 7,
+            "type" : "number",
+            "description" : "Amount charged for the transaction. Format: XXXX.XX",
+            "format" : "double"
+          },
+          "noOfAttemptsLeft" : {
+            "maxLength" : 2,
+            "type" : "string",
+            "description" : "Number of attempts left for otpTransactionId. Format: XX"
+          },
+          "chargeRedirectUrl" : {
+            "maxLength" : 250,
+            "type" : "string",
+            "description" : "URI to be used for redirecting of the user by the partner to the consent gateway page"
+          },
+          "otpTransactionId" : {
+            "maxLength" : 25,
+            "type" : "string",
+            "description" : "Unique Transaction Id assigned by the platform for the OTP Generation"
+          },
+          "errorInfo" : {
+            "$ref" : "#/components/schemas/errorInfo"
+          }
+        },
+        "description" : "This object defines the Transaction Status properties for the API call"
+      },
+      "charge" : {
+        "maxProperties" : 5,
+        "minProperties" : 1,
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "The unique charging code, given by the platform for the price amount"
+          },
+          "amount" : {
+            "maxLength" : 7,
+            "type" : "number",
+            "description" : "Amount associated with the charge code. Format: XXXX.XX",
+            "format" : "double"
+          },
+          "taxAmount" : {
+            "maxLength" : 7,
+            "type" : "number",
+            "description" : "Tax Amount for the Amount to be charged. Format: XXXX.XX",
+            "format" : "double"
+          },
+          "description" : {
+            "maxLength" : 250,
+            "type" : "string",
+            "description" : "The text to be used for information and billing"
+          },
+          "referenceCode" : {
+            "maxLength" : 25,
+            "type" : "string",
+            "description" : "Unique Transaction code assigned by the connecting system for the Transaction"
+          }
+        },
+        "description" : "This object defines the cost-charging properties for the API call"
+      },
+      "smsInfo" : {
+        "maxProperties" : 6,
+        "minProperties" : 4,
+        "type" : "object",
+        "properties" : {
+          "senderId" : {
+            "maxLength" : 11,
+            "minLength" : 3,
+            "type" : "string",
+            "description" : "The Sender ID to be used in the SMS"
+          },
+          "language" : {
+            "maxLength" : 2,
+            "minLength" : 2,
+            "type" : "string",
+            "description" : "Accepted List of Values that can be used for this parameter. Refer to Annexure: Language Codes. EN - English, BN - Bangla, AR - Arabic, HI - Hindi,  TH - Thai, MY - Burmese, ZH - Chinese, KM - Khmer",
+            "enum" : [ "EN", "BN", "AR", "HI", "TH", "MY", "ZH", "KM" ]
+          },
+          "message" : {
+            "maxLength" : 1000,
+            "minLength" : 1,
+            "type" : "string",
+            "description" : "Message to be sent in the SMS. Note: In case of Message Type is WAP Message to be in the format as WAPTITLE:WAPURL"
+          },
+          "msgType" : {
+            "maxLength" : 10,
+            "minLength" : 4,
+            "type" : "string",
+            "description" : "Accepted List of Values that can be used for this parameter.  MO - TEXT MT - TEXT, UNICODE",
+            "enum" : [ "TEXT", "UNICODE" ]
+          },
+          "validity" : {
+            "maxLength" : 2,
+            "type" : "string",
+            "description" : "Validity in hours for expiry of SMS"
+          },
+          "deliveryReport" : {
+            "maxLength" : 1,
+            "type" : "string",
+            "description" : "List of Values that can be used for this parameter.  0-Disabled(Default), 1-Enabled",
+            "enum" : [ "0", "1" ]
+          }
+        },
+        "description" : "This object defines the SMS properties for the API call"
+      },
+      "productInfo" : {
+        "maxProperties" : 11,
+        "minProperties" : 4,
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "The Unique ID assigned by the partner"
+          },
+          "type" : {
+            "maxLength" : 20,
+            "type" : "string",
+            "description" : "Accepted List of Values that can be used for this parameter. Refer to Annexure: Product types. Generic - Generic for General / Unknown Product(SUB & PPU),  SMS Alerts - Subscription Alerts (SUB & PPU), Wallpaper - Any Static Imagery Content Download (PPU), Animation - Any Animated Imagery Content Download (PPU), Music Album - Any Music Album Download (PPU), Audio Track - Any Music Song Download (PPU), Video - Any Video Download (PPU), Game - Any Game Downloads (SUB & PPU), Apps - Any Mobile App Downloads or In – App Purchases (SUB & PPU),  RBT Song - Any RBT Song Purchase (SUB & PPU), SMS Info - SMS Information ( Push Pull / OnDemand SMS) (PPU), Bundle Pack - Bundle Pack (Bundle Purchase) (SUB & PPU), Physical Product - Any M-Commerce Purchase of a physical product (PPU), Network Product - Any Mobile Operator Related Purchase of a product (SMS Packs, DATA Packs) (PPU), Gift Voucher - Any Digital / Physical Gift Voucher Purchase (PPU), Reward - Any Digital / Physical Reward Voucher Purchase (PPU),  Daily - Subscription Pack - Daily Billing (SUB), Weekly - Subscription Pack - Weekly Billing (SUB), Monthly - Subscription Pack - Monthly Billing (SUB), Custom - Subscription Pack – Custom Period Billing (SUB), Onceoff - Subscription Pack – One time Usage without subscribing to the product (SUB)",
+            "enum" : [ "Generic", "SMS Alerts", "Wallpaper", "Animation", "Music Album", "Audio Track", "Video", "Game", "Apps", "RBT Song", "SMS Info", "Bundle Pack", "Physical Product", "Network Product", "Gift Voucher", "Reward", "Daily", "Weekly", "Monthly", "Custom", "Onceoff" ]
+          },
+          "title" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "Title for identification of content"
+          },
+          "thumbnailUrl" : {
+            "maxLength" : 250,
+            "type" : "string",
+            "description" : "URL for displaying the thumbnail",
+            "format" : "URI"
+          },
+          "successUrl" : {
+            "maxLength" : 250,
+            "type" : "string",
+            "description" : "URL to which the Consent gateway need to redirect the user on successful charging. http://domain/cpurl/success?referenceCode= 354354353453434543&statuscode=200. Note: Platform will pass referenceCode and statusCode. 200-Success, 500-Error",
+            "format" : "URI"
+          },
+          "failureUrl" : {
+            "maxLength" : 250,
+            "type" : "string",
+            "description" : "URL to which the Consent gateway need to redirect the user on charging failure. http://domain/cpurl/failure?referenceCode= 354354353453434543&statuscode=500. Note: Platform will pass referenceCode and statusCode. 200-Success, 500-Error",
+            "format" : "URI"
+          },
+          "cancelUrl" : {
+            "maxLength" : 250,
+            "type" : "string",
+            "description" : "URL to which the Consent gateway need to redirect the user cancels charging. http://domain/cpurl/cancel?referenceCode= 354354353453434543&statuscode=500. Note: Platform will pass referenceCode and statusCode. 200-Success, 500-Error",
+            "format" : "URI"
+          },
+          "notifyUrl" : {
+            "maxLength" : 250,
+            "type" : "string",
+            "description" : "URL to which the Consent gateway will inform about the transaction status. Note: This body format for the notification will be as \"Notify Charging Status\"",
+            "format" : "URI"
+          },
+          "landingUrl" : {
+            "maxLength" : 250,
+            "type" : "string",
+            "description" : "URL to which the Consent gateway will inform about user landing",
+            "format" : "URI"
+          },
+          "downloadUrl" : {
+            "maxLength" : 250,
+            "type" : "string",
+            "description" : "URL to be used by CC agent for re-push to the user for downloading the content",
+            "format" : "URI"
+          },
+          "validity" : {
+            "maxLength" : 4,
+            "type" : "string",
+            "description" : "Validity in days for expiry of download content download URL. Format: XX/XXXX"
+          }
+        },
+        "description" : "This object defines the event properties for the API call"
+      },
+      "refundInfo" : {
+        "maxProperties" : 6,
+        "minProperties" : 3,
+        "type" : "object",
+        "properties" : {
+          "chargeReferenceCode" : {
+            "maxLength" : 25,
+            "type" : "string",
+            "description" : "Unique Transaction code given by the Platform for the Charging Transaction"
+          },
+          "refundAmount" : {
+            "maxLength" : 12,
+            "type" : "string",
+            "description" : "Amount to be refunded to the subscriber account. Format : xxxx.xx"
+          },
+          "refundReasonCode" : {
+            "maxLength" : 5,
+            "type" : "string",
+            "description" : "Refer to Annexure: Refund Reason Codes"
+          },
+          "refundDescription" : {
+            "maxLength" : 250,
+            "type" : "string",
+            "description" : "The text to be used for information in refund"
+          },
+          "processRefundOffline" : {
+            "type" : "number",
+            "description" : "Process Refund Offline Flag (0/1)",
+            "format" : "int"
+          },
+          "unsubProfile" : {
+            "type" : "number",
+            "description" : "Profile UnSubscription Flag (0/1)",
+            "format" : "int"
+          }
+        },
+        "description" : "This object defines the refund transaction Details for the API call"
+      },
+      "agentInfo" : {
+        "maxProperties" : 2,
+        "minProperties" : 0,
+        "type" : "object",
+        "properties" : {
+          "agentId" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "CC Agent Login ID"
+          },
+          "agentName" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "CC Agent Name"
+          }
+        },
+        "description" : "This object defines the CC Agent who has initiated the transaction API call if the request is initiated from the CC-Web"
+      },
+      "transaction" : {
+        "maxProperties" : 5,
+        "minProperties" : 5,
+        "type" : "object",
+        "properties" : {
+          "totalAmountCharged" : {
+            "maxLength" : 7,
+            "type" : "string",
+            "description" : "Amount charged for the transaction. Format: XXXX.XX"
+          },
+          "statusCode" : {
+            "maxLength" : 3,
+            "type" : "string",
+            "description" : "200-Success, 500-Error",
+            "enum" : [ "200", "500" ]
+          },
+          "referenceCode" : {
+            "maxLength" : 25,
+            "type" : "string",
+            "description" : "Unique Transaction code given by the partner for the Transaction"
+          },
+          "serverReferenceCode" : {
+            "maxLength" : 25,
+            "type" : "string",
+            "description" : "Unique Transaction code assigned by the platform for the Transaction"
+          },
+          "transTimestamp" : {
+            "maxLength" : 19,
+            "type" : "string",
+            "description" : "Transaction done Format: YYYY-MM-DD hh:mm:ss",
+            "format" : "date-time"
+          }
+        },
+        "description" : "This object defines the Transaction properties for the API call"
+      },
+      "subscriptionInfo" : {
+        "maxProperties" : 13,
+        "minProperties" : 6,
+        "type" : "object",
+        "properties" : {
+          "serviceIdentifier" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "Unique Service ID assigned by the Platform in a service"
+          },
+          "productIdentifier" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "Unique Product ID assigned by the Platform in a service"
+          },
+          "subscriptionId" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "Unique Subscription ID assigned by the Platform for the Subscription"
+          },
+          "subscriptionStatus" : {
+            "maxLength" : 2,
+            "type" : "string",
+            "description" : "Subscription State",
+            "enum" : [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "11", "12", "13", "14", "15" ]
+          },
+          "subscriptionSubStatus" : {
+            "maxLength" : 2,
+            "type" : "string",
+            "description" : "Subscription Sub State",
+            "enum" : [ "0", "50", "51", "52", "53", "54", "55" ]
+          },
+          "validity" : {
+            "maxLength" : 4,
+            "type" : "string",
+            "description" : "No of Days to Activate the subscription. Format: XXXX"
+          },
+          "nextRenewalDate" : {
+            "maxLength" : 19,
+            "type" : "string",
+            "description" : "Date on which next renewal will happen for the Subscription. Format: YYYY-MM-DD hh:mm:ss",
+            "format" : "date-time"
+          },
+          "code" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "The unique charging code, assigned to the product with in a Service in the platform."
+          },
+          "registrationDate" : {
+            "maxLength" : 19,
+            "type" : "string",
+            "description" : "Date on which subscribed was registered to the service. Format: YYYY-MM-DD hh:mm:ss",
+            "format" : "date-time"
+          },
+          "activationDate" : {
+            "maxLength" : 19,
+            "type" : "string",
+            "description" : "Date on which subscribed was activated to the service. Format: YYYY-MM-DD hh:mm:ss",
+            "format" : "date-time"
+          },
+          "lastRenewalDate" : {
+            "maxLength" : 19,
+            "type" : "string",
+            "description" : "Date on which last renewal happened for the Subscription. Format: YYYY-MM-DD hh:mm:ss",
+            "format" : "date-time"
+          },
+          "statusChangedDate" : {
+            "maxLength" : 19,
+            "type" : "string",
+            "description" : "Date on which the Subscription status was changed for the User. Format: YYYY-MM-DD hh:mm:ss",
+            "format" : "date-time"
+          },
+          "lastChargedAmount" : {
+            "maxLength" : 7,
+            "type" : "number",
+            "description" : "Amount that was charged. Format: XXXX.XX",
+            "format" : "double"
+          }
+        },
+        "description" : "This object defines the Subscription properties for the API call"
+      },
+      "consentInfo" : {
+        "maxProperties" : 3,
+        "minProperties" : 0,
+        "type" : "object",
+        "properties" : {
+          "activationConsentId" : {
+            "maxLength" : 25,
+            "type" : "string",
+            "description" : "Unique Consent ID assigned by the Platform for the Subscription"
+          },
+          "activationConsentString" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "Activation Consent ID String sent by the End user for activation of the Subscription"
+          },
+          "activationConsentChannel" : {
+            "maxLength" : 10,
+            "type" : "string",
+            "description" : "Activation Consent Channel used by the End user for activation of the Subscription. MTSMS - MT SMS Push, MOSMS - MO SMS, USSD - USSD MI Push (Mobile Initiated Push), IVR - IVR Channel, IVR OBD - One IVR Platform – OBD (Do Not Use – System Reserved), IVR IBD - One IVR Platform – IBD (Do Not Use – System Reserved), CCW - Customer Care WEB Portal (Do Not Use – System Reserved), WEB - Web Portal (Partner Portal), WAP - WAP Portal (Partner Portal), APP - Mobile Application (Partner Mobile App), RBT - Ring Back Tone / Music Platform (Do Not Use – System Reserved), GBE - GBE Platform (Do Not Use – System Reserved), CRM - CRM Platform (Do Not Use – System Reserved), USSDNI - USSD Network Initiated Push, CGW - Consent Gateway (Do Not Use – System Reserved), SUBM - Subscription Manager (Do Not Use – System Reserved), ESB - ESB (Do Not Use – System Reserved), UMS - Unified Messaging System",
+            "enum" : [ "MTSMS", "MOSMS", "USSD", "IVR", "IVR OBD", "IVR IBD", "CCW", "WEB", "WAP", "APP", "RBT", "GBE", "CRM", "USSDNI", "CGW", "SUBM", "ESB", "UMS" ]
+          }
+        },
+        "description" : "This object defines the Consent properties for the API call"
+      },
+      "otpSettings" : {
+        "type" : "object",
+        "properties" : {
+          "length" : {
+            "maxLength" : 9,
+            "minLength" : 4,
+            "type" : "number",
+            "description" : "OTP Length Controller"
+          },
+          "expiry" : {
+            "maxLength" : 5,
+            "minLength" : 1,
+            "type" : "number",
+            "description" : "OTP Expiry in Minutes"
+          },
+          "type" : {
+            "maxLength" : 12,
+            "minLength" : 7,
+            "type" : "string",
+            "description" : "OTP Generation Type",
+            "enum" : [ "NUMERIC", "ALPHANUMERIC" ]
+          }
+        },
+        "description" : "This object defines the OTP Generation and LifeCycle properties for the API call"
+      },
+      "v1_activate_body" : {
+        "required" : [ "accessInfo" ],
+        "properties" : {
+          "accessInfo" : {
+            "$ref" : "#/components/schemas/accessInfo"
+          },
+          "charge" : {
+            "$ref" : "#/components/schemas/charge"
+          }
+        },
+        "example" : {
+          "accessInfo" : {
+            "serviceKey" : "3E28561627CB6FAB66",
+            "packCode" : "PC4545",
+            "endUserId" : "66444358220",
+            "accessChannel" : "MTSMS",
+            "referenceCode" : "{{$randomInt}}"
+          },
+          "charge" : {
+            "code" : "A9EHDE",
+            "currency" : "INR"
+          }
+        }
+      },
+      "inline_response_200" : {
+        "required" : [ "statusInfo", "subscriptionInfo" ],
+        "properties" : {
+          "statusInfo" : {
+            "$ref" : "#/components/schemas/statusInfo"
+          },
+          "subscriptionInfo" : {
+            "$ref" : "#/components/schemas/subscriptionInfo"
+          }
+        }
+      },
+      "v1_unsubscribe_body" : {
+        "required" : [ "accessInfo" ],
+        "properties" : {
+          "accessInfo" : {
+            "$ref" : "#/components/schemas/accessInfo"
+          },
+          "subscriptionInfo" : {
+            "$ref" : "#/components/schemas/subscriptionInfo"
+          }
+        },
+        "example" : {
+          "accessInfo" : {
+            "serviceKey" : "3E28561627CB6FAB66",
+            "packCode" : "PC4545",
+            "endUserId" : "66444358220",
+            "accessChannel" : "MTSMS",
+            "referenceCode" : "{{$randomInt}}"
+          },
+          "subscriptionInfo" : {
+            "subscriptionId" : "5011270016177973837930028"
+          },
+          "extraInfo" : [ {
+            "value" : "5531",
+            "key" : "deActReasonCode"
+          }, {
+            "value" : "true",
+            "key" : "skipEventNotification"
+          } ]
+        }
+      },
+      "v1_getsubscriptionstatus_body" : {
+        "required" : [ "accessInfo" ],
+        "properties" : {
+          "accessInfo" : {
+            "$ref" : "#/components/schemas/accessInfo"
+          }
+        },
+        "example" : {
+          "accessInfo" : {
+            "serviceKey" : "3e2856672fc112d71a",
+            "packCode" : "PC4545",
+            "endUserId" : "4381520742968082",
+            "accessChannel" : "MTSMS",
+            "referenceCode" : "{{$randomInt}}"
+          }
+        }
+      },
+      "v1_pause_body" : {
+        "required" : [ "accessInfo" ],
+        "properties" : {
+          "accessInfo" : {
+            "$ref" : "#/components/schemas/accessInfo"
+          },
+          "subscriptionInfo" : {
+            "$ref" : "#/components/schemas/subscriptionInfo"
+          }
+        },
+        "example" : {
+          "accessInfo" : {
+            "serviceKey" : "3e2856672fc112d71a",
+            "packCode" : "PC4545",
+            "endUserId" : "4381520742968082",
+            "accessChannel" : "MTSMS",
+            "referenceCode" : "{{$randomInt}}",
+            "action" : "pause/resume"
+          },
+          "subscriptionInfo" : {
+            "subscriptionId" : "{{randomInt}}",
+            "code" : "4445090"
+          }
+        }
+      },
+      "inline_response_200_1" : {
+        "required" : [ "statusInfo" ],
+        "properties" : {
+          "statusInfo" : {
+            "$ref" : "#/components/schemas/statusInfo"
+          }
+        }
+      },
+      "v1_chargeuser_body" : {
+        "required" : [ "accessInfo", "charge", "productInfo" ],
+        "properties" : {
+          "accessInfo" : {
+            "$ref" : "#/components/schemas/accessInfo"
+          },
+          "charge" : {
+            "$ref" : "#/components/schemas/charge"
+          }
+        },
+        "example" : {
+          "accessInfo" : {
+            "serviceKey" : "3e2856672fc112d71a",
+            "packCode" : "PC4545",
+            "endUserId" : "4381520742968082",
+            "accessChannel" : "MTSMS",
+            "referenceCode" : "{{$randomInt}}"
+          },
+          "charge" : {
+            "code" : "4445090",
+            "amount" : 1200.34,
+            "taxAmount" : 700.14,
+            "currency" : "THB",
+            "description" : "Sample Charging"
+          }
+        }
+      },
+      "v1_chargeotp_body" : {
+        "required" : [ "accessInfo" ],
+        "properties" : {
+          "accessInfo" : {
+            "$ref" : "#/components/schemas/accessInfo"
+          }
+        },
+        "example" : {
+          "accesInfo" : {
+            "serviceKey" : "3e2856672fc112d71a",
+            "packCode" : "PC4545",
+            "endUserId" : "4381520742968082",
+            "accessChannel" : "MTSMS",
+            "referenceCode" : "{{$randomInt}}",
+            "otpTransactionId" : "5017331301516795528298025"
+          }
+        }
+      },
+      "v1_refund_body" : {
+        "required" : [ "accessInfo", "agentInfo", "refundInfo" ],
+        "properties" : {
+          "accessInfo" : {
+            "$ref" : "#/components/schemas/accessInfo"
+          },
+          "refundInfo" : {
+            "$ref" : "#/components/schemas/refundInfo"
+          },
+          "agentInfo" : {
+            "$ref" : "#/components/schemas/agentInfo"
+          }
+        },
+        "example" : {
+          "accessInfo" : {
+            "serviceKey" : "3e2856672fc112d71a",
+            "packCode" : "PC4545",
+            "endUserId" : "4365829610597138",
+            "accessChannel" : "WAP",
+            "referenceCode" : "{{$randomInt}}"
+          },
+          "refundInfo" : {
+            "chargeReferenceCode" : "API00700914545428467834",
+            "refundAmount" : 2,
+            "refundReasonCode" : "001",
+            "refundDescription" : "refund test",
+            "processRefundOffline" : 0,
+            "unsubProfile" : 1
+          },
+          "agentInfo" : {
+            "agentId" : "csdp-admin@digitral.com",
+            "agentName" : "digitral"
+          }
+        }
+      },
+      "v1_sendsms_body" : {
+        "required" : [ "accessInfo", "smsInfo" ],
+        "properties" : {
+          "accessInfo" : {
+            "$ref" : "#/components/schemas/accessInfo"
+          },
+          "smsInfo" : {
+            "$ref" : "#/components/schemas/smsInfo"
+          },
+          "charge" : {
+            "$ref" : "#/components/schemas/charge"
+          }
+        }
+      },
+      "v1_sendotp_body" : {
+        "required" : [ "accessInfo", "smsInfo" ],
+        "properties" : {
+          "accessInfo" : {
+            "$ref" : "#/components/schemas/accessInfo"
+          },
+          "otpSettings" : {
+            "$ref" : "#/components/schemas/otpSettings"
+          },
+          "charge" : {
+            "$ref" : "#/components/schemas/charge"
+          },
+          "smsInfo" : {
+            "$ref" : "#/components/schemas/smsInfo"
+          }
+        },
+        "example" : {
+          "accessInfo" : {
+            "serviceKey" : "3e2856672fc112d71a",
+            "packCode" : "PC4545",
+            "endUserId" : "4381520742968082",
+            "accessChannel" : "MTSMS",
+            "referenceCode" : "{{$randomInt}}"
+          },
+          "otpSettings" : {
+            "length" : 6,
+            "expiry" : 2,
+            "type" : "NUMERIC"
+          },
+          "charge" : {
+            "code" : "SUB000185032271712161443",
+            "description" : "charge otp transaction"
+          },
+          "smsInfo" : {
+            "senderId" : 1000,
+            "language" : "EN",
+            "msgType" : "TEXT",
+            "message" : "OTP Sent for Service !SRV_NAME!. OTP is !OTP! will Expire In !EXP_MIN! Minutes",
+            "validity" : 2
+          }
+        }
+      },
+      "v1_validateotp_body" : {
+        "required" : [ "accessInfo" ],
+        "properties" : {
+          "accessInfo" : {
+            "$ref" : "#/components/schemas/accessInfo"
+          }
+        },
+        "example" : {
+          "accessInfo" : {
+            "serviceKey" : "3e2856672fc112d71a",
+            "packCode" : "PC4545",
+            "endUserId" : "4381520742968082",
+            "accessChannel" : "MTSMS",
+            "referenceCode" : "{{$randomInt}}",
+            "otpTransactionId" : "5017331301516791909106011",
+            "otp" : "99198",
+            "considerCharging" : "0"
+          }
+        }
+      },
+      "v1_resendotp_body" : {
+        "required" : [ "accessInfo" ],
+        "properties" : {
+          "accessInfo" : {
+            "$ref" : "#/components/schemas/accessInfo"
+          }
+        },
+        "example" : {
+          "accessInfo" : {
+            "serviceKey" : "3e2856672fc112d71a",
+            "packCode" : "PC4545",
+            "endUserId" : "4381520742968082",
+            "accessChannel" : "MTSMS",
+            "referenceCode" : "{{$randomInt}}",
+            "otpTransactionId" : "5017331301516791993928014"
+          }
+        }
+      }
+    },
+    "parameters" : {
+      "Content-Type" : {
+        "name" : "Content-Type",
+        "in" : "header",
+        "description" : "Content Type",
+        "required" : false,
+        "style" : "simple",
+        "explode" : false,
+        "schema" : {
+          "type" : "string"
+        },
+        "example" : "application/json"
+      },
+      "Authorization" : {
+        "name" : "Authorization",
+        "in" : "header",
+        "description" : "User Autherization",
+        "required" : false,
+        "style" : "simple",
+        "explode" : false,
+        "schema" : {
+          "type" : "string"
+        },
+        "example" : "c2luZGh1ci52YTppbWkxMjNWQQ=="
+      }
+    },
+    "securitySchemes" : {
+      "basicAuth" : {
+        "type" : "http",
+        "scheme" : "basic"
+      }
+    }
+  }
+}
